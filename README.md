@@ -2,6 +2,8 @@
 
 Mini-projet réalisé comme test technique pour l'obtention d'un stage dans le développement Web.
 
+## *** Vous avez besoin de renseigner un token MapBox valide dans le fichier **token_mapbox.ts** ***
+
 ## Pour installer les dépendances :
 
 ```bash
