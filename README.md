@@ -4,8 +4,8 @@ Mini-projet réalisé comme test technique pour l'obtention d'un stage dans le d
 
 Le projet est completement compatible linux et windows.
 
-- *** Soyez sur que le port 8080 n'est ^pas déja utilisé sur votre machine ***
-- *** Vous avez besoin de renseigner un token MapBox valide dans le fichier token_mapbox.ts ***
+- **Soyez sur que le port 8080 n'est pas déja utilisé sur votre machine**
+- **Vous avez besoin de renseigner un token MapBox valide dans le fichier token_mapbox.ts**
 
 ## Pour installer les dépendances :
 
