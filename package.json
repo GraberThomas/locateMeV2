@@ -7,7 +7,7 @@
     "install-server": "cd server && npm i",
     "install-client": "cd client && npm i",
     "install-all-deps": "concurrently \"npm run install-server\" \"npm run install-client\"",
-    "clean": "rimraf ./server/dist && rimraf ./client/dist",
+    "clean": "shx rm -rf ./server/dist && shx rm -rf ./client/dist",
     "build": "npm run --silent clean && cd client && npm run build && cd .. && shx cp -r ./client/dist/ ./server/ && echo '\n\n\nBuild -> Done' && node info_build.js",
     "dev": "cd ./client && npm run dev",
     "server": "cd ./server && npm run start"
@@ -15,8 +15,7 @@
   "author": "Thomas Graber",
   "license": "ISC",
   "dependencies": {
-    "concurrently": "^7.5.0",
-    "rimraf": "^3.0.2"
+    "concurrently": "^7.5.0"
   },
   "devDependencies": {
     "shx": "^0.3.4"

@@ -2,9 +2,15 @@
 
 Mini-projet réalisé comme test technique pour l'obtention d'un stage dans le développement Web.
 
+Le projet est completement compatible linux et windows.
+
 ***Vous avez besoin de renseigner un token MapBox valide dans le fichier token_mapbox.ts***
 
 ## Pour installer les dépendances :
+
+```bash
+npm i
+```
 
 ```bash
 npm run install-all-deps
