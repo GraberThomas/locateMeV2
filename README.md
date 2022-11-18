@@ -14,7 +14,7 @@ Le projet est completement compatible linux et windows.
 
 ```bash
 git clone https://github.com/GraberThomas/locateMeV2
-cd locateMe
+cd locateMeV2
 npm i
 ```
 
