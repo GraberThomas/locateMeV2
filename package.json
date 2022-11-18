@@ -1,0 +1,21 @@
+{
+  "name": "locateme",
+  "version": "1.0.0",
+  "description": "Test technique demandé pour un stage developpement WEB",
+  "main": "index.js",
+  "scripts": {
+    "install-server": "cd server && npm i",
+    "install-client": "cd client && npm i",
+    "install-all-deps": "concurrently \"npm run install-server\" \"npm run install-client\"",
+    "clean": "rimraf ./server/dist && rimraf ./client/dist",
+    "build": "npm run --silent clean && cd client && npm run build && cd .. && cp -r ./client/dist/ ./server/ && echo '\n\n\nBuild -> Done' && node info_build.js",
+    "dev": "cd ./client && npm run dev",
+    "server": "cd ./server && npm run start"
+  },
+  "author": "Thomas Graber",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^7.5.0",
+    "rimraf": "^3.0.2"
+  }
+}
