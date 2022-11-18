@@ -16,6 +16,6 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src"],
+  "include": ["src", "../token_mapbox.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -7,6 +7,7 @@ import Contacts_contenair from './components/Contacts_contenair';
 import PopUpInfo from './components/PopUpInfo';
 import mapboxgl from 'mapbox-gl';
 import PopUpAddContact from './components/PopUpAddContact';
+import {token} from '../../token_mapbox';
 
 
 function App() {
@@ -100,7 +101,7 @@ function App() {
   return (
     <div className="App flex absolute w-full font-barlow text-[1.2rem] h-[100vh]">
       <Map
-        mapboxAccessToken='pk.eyJ1IjoidGhvbWFzNzAiLCJhIjoiY2xhbGFkaXUwMDNlaTNvcXY0azFzY3E1dCJ9.EyMeFGduulYRb72lM7Da0g'
+        mapboxAccessToken={token}
         initialViewState={{
           longitude: 6.0240539,
           latitude: 47.237829,
