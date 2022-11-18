@@ -8,11 +8,14 @@ import PopUpInfo from './components/PopUpInfo';
 import mapboxgl from 'mapbox-gl';
 import PopUpAddContact from './components/PopUpAddContact';
 import {token} from '../../token_mapbox';
+import PopUpErrorServ from './components/PopUpErrorServ';
 
 
 function App() {
   const [markersData, setMarkersData]: [MarkerType[], Function] = useState([]);
-  const [popUpInfoIsvisible, setpopUpInfoIsvisible] = useState(false);
+  const [errorServ, setErrorServ]:[[boolean, string], Function] = useState([false, ""]);
+  const [errorParse, setErrorParse]:[[boolean, string], Function] = useState([false, ""]);
+  const [popUpInfoIsvisible, setpopUpInfoIsvisible] = useState(false)
   const [infoPopUp, setInfoPopup]: [string, Function] = useState("");
   const [popUpAddContactIsvisible, setpopUpAddContactIsvisible] = useState(false);
   const [selectedCoordinates, setSelectedCoordinates]: [CoordinateObject | null, Function] = useState(null)
@@ -26,7 +29,13 @@ function App() {
     console.log("test")
     let data = fetch("http://localhost:8080/markers").then((res: Response) => {
       res.json().then(data => {
-        setMarkersData(data.data)
+        if(data.status == 0){
+          setMarkersData(data.data)
+        }else{
+          let msg:string = data.message;
+          console.log(msg)
+          setErrorParse([true, msg])
+        }
       });
     })
   }
@@ -52,9 +61,12 @@ function App() {
       let ret = await response.json();
       if (ret.status == 200) {
         getMarkers();
+      }else{
+        console.log("error");
+        setErrorServ([true, ret.message])
       }
     } else {
-      alert("Addition could not be completed: Server error");
+      setErrorServ([true, "Erreur du server. Celui ci n'a pas pu traiter la requete."])
     }
   }
 
@@ -70,13 +82,12 @@ function App() {
     if (response.status == 200) {
       let ret = await response.json();
       if (ret.status != 200) {
-        console.log(ret.status)
-        alert("La suppression n'a pas pu être effectuée.");
+        setErrorServ([true, ret.message]);
       } else {
         getMarkers();
       }
     } else {
-      alert("La suppression n'a pas pu être effectuée. Erreur du serveur");
+      setErrorServ([true, "Erreur du server. Celui ci n'a pas pu traiter la requete."]);
     }
   }
 
@@ -98,29 +109,43 @@ function App() {
     setSelectedCoordinates(null);
   }
 
+  const closePopUpErrorServ = () => {
+    setErrorServ([false, ""])
+  }
+
   return (
-    <div className="App flex absolute w-full font-barlow text-[1.2rem] h-[100vh]">
-      <Map
-        mapboxAccessToken={token}
-        initialViewState={{
-          longitude: 6.0240539,
-          latitude: 47.237829,
-          zoom: 13
-        }}
-        style={{ width: '70vw', height: '100vh' }}
-        mapStyle="mapbox://styles/mapbox/streets-v11"
-        onClick={(e: mapboxgl.MapMouseEvent) => {
-          setSelectedCoordinates(e.lngLat)
-          setpopUpAddContactIsvisible(true);
-        }}
-      >
-        {addMarkers()}
-        <NavigationControl />
-      </Map>
-      <Contacts_contenair openPopUp={openPopUpInfo} markersData={markersData} openPopUpAddContact={openPopUpAddContact} removeContact={removeContact} />
-      <PopUpInfo visible={popUpInfoIsvisible} marksData={markersData} infoPopUp={infoPopUp} closePopUp={closePopUpInfo} />
-      <PopUpAddContact coordinates={selectedCoordinates} visible={popUpAddContactIsvisible} closePopUp={closePopUpAddContact} fctAdd={addNewContact} />
-    </div >
+    <div>
+    {
+      !errorParse[0]
+      ? 
+        <div className="App flex absolute w-full font-barlow text-[1.2rem] h-[100vh]"> 
+          <Map
+            mapboxAccessToken={token}
+            initialViewState={{
+              longitude: 6.0240539,
+              latitude: 47.237829,
+              zoom: 13
+            }}
+            style={{ width: '70vw', height: '100vh' }}
+            mapStyle="mapbox://styles/mapbox/streets-v11"
+            onClick={(e: mapboxgl.MapMouseEvent) => {
+              e.preventDefault()
+              setSelectedCoordinates(e.lngLat)
+              setpopUpAddContactIsvisible(true);
+            }}
+          >
+            {addMarkers()}
+            <NavigationControl />
+          </Map>
+          <Contacts_contenair openPopUp={openPopUpInfo} markersData={markersData} openPopUpAddContact={openPopUpAddContact} removeContact={removeContact} />
+          <PopUpInfo visible={popUpInfoIsvisible} marksData={markersData} infoPopUp={infoPopUp} closePopUp={closePopUpInfo} />
+          <PopUpAddContact coordinates={selectedCoordinates} visible={popUpAddContactIsvisible} closePopUp={closePopUpAddContact} fctAdd={addNewContact} />
+          {errorServ[0] && <PopUpErrorServ message={errorServ[1]} closable={true} closePopUpErrorServ={closePopUpErrorServ}></PopUpErrorServ>}
+          </div>
+      : 
+        <PopUpErrorServ message={errorParse[1]} closable={false} closePopUpErrorServ={closePopUpErrorServ}></PopUpErrorServ>
+    }
+    </div>
   )
 }
 

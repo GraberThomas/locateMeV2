@@ -1,1 +1,1 @@
-export const token = ''
+export const token = 'pk.eyJ1IjoidGhvbWFzNzAiLCJhIjoiY2xhbWZ5dWMzMDV1dTN2bXFjc2RpOTNpMiJ9.QpDr2EjS9R3EcRjA3aFYOA'

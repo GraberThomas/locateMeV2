@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Popup from 'reactjs-popup';
 import { CoordinateObject, MarkerType } from '../types/types';
 
@@ -16,6 +16,10 @@ const PopUpAddContact = ({ visible, closePopUp, coordinates, fctAdd }: propsPopU
     const type = useRef<HTMLSelectElement>(null);
     const lat = useRef<HTMLInputElement>(null);
     const lng = useRef<HTMLInputElement>(null);
+
+    const resetErrors = () => {
+        setErrors([])
+    }
 
     const handleClickSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -68,7 +72,7 @@ const PopUpAddContact = ({ visible, closePopUp, coordinates, fctAdd }: propsPopU
     }
 
     return (
-        <Popup open={visible} closeOnDocumentClick onClose={() => closePopUp()}>
+        <Popup open={visible} onOpen={() => (resetErrors())} closeOnDocumentClick onClose={() => closePopUp()}>
             <div className='min-w-[200px] max-w-[500px] rounded-xl bg-[#f1f1f1] p-6 transition-all' >
                 <h3 className='block text-center font-bold text-2xl bg-card_bg rounded-lg mb-6 p-3'>Add a contact</h3>
                 {!coordinates && <p className='text-[#2c942c]'>Vous pouvez ajouter un contact en cliquant sur la carte pour renseigner automatiquement les coordonnées.</p>}
