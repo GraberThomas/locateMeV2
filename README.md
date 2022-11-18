@@ -22,7 +22,7 @@ npm i
 npm run install-all-deps
 ```
 
-## Pour tester la version build : 
+## Pour tester la version Build : 
 
 Build le projet :
 ```bash
@@ -36,7 +36,7 @@ npm run server
 
 Rendez vous sur **http://localhost:8080/**
 
-## Pour tester le mod "Dev"
+## Pour rentrer dans le mode Developpement :
 
 ***Sur deux terminaux différent :***
 
